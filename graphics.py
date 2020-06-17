@@ -5,7 +5,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     from julia import *
-	
+
     xmin, xmax, xn = -1.25, +1.25, 3000/2
     ymin, ymax, yn = -1.25, +1.25, 2500/2
 
