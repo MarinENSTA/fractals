@@ -25,6 +25,7 @@ if __name__ == '__main__':
 	C = [C0, C1, C2, C3]
 	quit = False
 	while not quit:
+		
 		fig = plt.figure(figsize=(width, height), dpi=dpi)
 		ax = fig.add_axes([0.0, 0.0, 1.0, 1.0], frameon=False, aspect=1)
 
@@ -41,7 +42,7 @@ if __name__ == '__main__':
 								  np.log(np.log(abs(Z)))/np.log(2) +
 								  log_horizon)
 
-			M = light.shade(M, cmap=plt.cm.hot, vert_exag=1.5, norm=colors.PowerNorm(0.3), blend_mode='hsv')
+			M = light.shade(M, cmap=plt.get_cmap("PiYG"))
 			# see https://matplotlib.org/examples/color/colormaps_reference.html
 			fig.add_subplot(2, 2, i+1)
 			plt.imshow(M, extent=[xmin, xmax, ymin, ymax], interpolation="bicubic")
@@ -53,24 +54,24 @@ if __name__ == '__main__':
 
 		fitness = [0,0,0,0]
 
-		print("Continuer ?")
+		print("Continuer ? (n ou 'no' pour arrêter)")
 		q = input()
 		if q == 'no' or q == 'n':
 			quit = True
 
 		else:
-			print("Garder l'ancienne génération ou la nouvelle ? (nouvelle = 0, ancienne passer)")
-			i = int(input())
-			if i == 0:
+			print("Garder l'ancienne génération ou la nouvelle ? (ancienne = 0, nouvelle = entrée)")
+			i = input()
+
+			if i != '0':
 				for j in range(4):
 					print("Préférences de l'image", j, "(entre 1 et 10) :")
-					fitness[i] = int(input())
+					fitness[j] = int(input())
 
 				print()
-
+				print(fitness)
 				C = crossover_all(C, fitness, 0.9)
 				C = mutation_all(C, 0.1, 0.1)
-
 
 	# Normalized recount as explained in:
 	# https://linas.org/art-gallery/escape/smooth.html

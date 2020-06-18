@@ -33,8 +33,8 @@ def crossover(C_list,P):
 	C_cross = []
 	p_adj=0                                       #on crée une liste P_final correspondant aux probabilités d'avoir un élément d'une liste C dans C_cross
 	for i in range(len(P)):
-		p_adj+=P[i]
-	P_final=[(1/p_adj)*i for i in P]
+		p_adj += P[i]
+	P_final=[i/p_adj for i in P]
 
 	for j in range(l):                           #on choisi aléatoirement le coefficient dans une des listes C selon la préférence de l'utilisateur
 		C_choisi=choices(C_list,P_final)
@@ -43,13 +43,15 @@ def crossover(C_list,P):
 	return C_cross
 
 def crossover_all(C_list,P,pc):
-	C_list_cross=C_list.copy()
+	C_list_cross=[]
 
 	x=generator.uniform(0,1)
 	if x < pc:
 		for i in range(len(C_list)):
 			C_cross=crossover(C_list,P)
 			C_list_cross+=[C_cross]
+	else:
+		C_list_cross = C_list.copy()
 	return C_list_cross
 
 
