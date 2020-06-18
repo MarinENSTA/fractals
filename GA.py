@@ -49,7 +49,7 @@ def crossover1(C_list,P,pc):
 def crossover1_all(C_list,P,pc):
 	C_list_cross=[]
 	for i in range(len(C_list)):
-		C_cross=crossover1(C_list [i],P,pc)
+		C_cross=crossover1(C_list,P,pc)
 		C_list_cross+=[C_cross]
 	return C_list_cross
 
