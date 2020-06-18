@@ -13,11 +13,19 @@ def maximum(L):
 
 def mutation(C,pm,sigma):
 	x=generator.uniform(0,1)
+	C_mute=[]
 	if x<pm:
 		for D in C :
 			for y in D:
-				y+=generator.gauss(0,sigma)
-	return C
+				C_mute+=[y+generator.gauss(0,sigma)]
+	return C_mute
+
+def mutation_all(C_list,pm,sigma):
+	C_list_mut=[]
+	for i in range(len(C_list)):
+		C_mute=mutation(C_list[i],pm,sigma)
+		C_list_mut+=[C_mute]
+	return C_list_mut
 
 
 def crossover1(C_list,P,pc):
@@ -37,3 +45,37 @@ def crossover1(C_list,P,pc):
 			C_cross+=[C_choisi[0][j]]
 
 	return C_cross
+
+def crossover1_all(C_list,P,pc):
+	C_list_cross=[]
+	for i in range(len(C_list)):
+		C_cross=crossover1(C_list [i],P,pc)
+		C_list_cross+=[C_cross]
+	return C_list_cross
+
+
+
+def mutation2(C,pm,sigma):                #au cas où on essaie de prendre en compte les tables de couleurs la liste C a pour avant dernier élement les paramètres RGB et comme dernier élements les paramètres de lumière
+	x=generator.uniform(0,1)
+	if x<pm:
+		l=len(C)
+		for i in range(l-2):                  #on mute les doublets [cx,cy]
+			D=C[i]
+			for y in D:
+				y+=generator.gauss(0,sigma)
+				
+		for y in C[l-2]:                     #on mute la couleur (RGB)
+			y+=generator.uniform(0,10)
+			if y>255:
+				y=255
+			else:
+				if y<0:
+					y=0
+
+		for y in C[l-1]:
+			y+=generator.gauss(0,sigma^2)
+			if y>1:
+				y=1
+			else:
+				if y<0:
+					y=0
