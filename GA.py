@@ -13,13 +13,11 @@ def maximum(L):
 
 def mutation(C,pm,sigma):
 	x=generator.uniform(0,1)
-	C_mute=[]
+	C_mute=C.copy()
 	if x<pm:
-		for D in C :
-			Doublet=[]
+		for D in C_mute :
 			for y in D:
-				Doublet+=[y+generator.gauss(0,sigma)]
-		C_mute+=[Doublet]
+				y+=generator.gauss(0,sigma)
 	return C_mute
 
 def mutation_all(C_list,pm,sigma):
@@ -30,29 +28,28 @@ def mutation_all(C_list,pm,sigma):
 	return C_list_mut
 
 
-def crossover1(C_list,P,pc):
-	x=generator.uniform(0,1)
-	if x<pc:
-		l=len(C_list[0])
-		C_cross=[]
+def crossover(C_list,P):
+	l=len(C_list[0])
+	C_cross = []
+	p_adj=0                                       #on crée une liste P_final correspondant aux probabilités d'avoir un élément d'une liste C dans C_cross
+	for i in range(len(P)):
+		p_adj+=P[i]
+	P_final=[(1/p_adj)*i for i in P]
 
-		p_adj=0                                       #on crée une liste P_final correspondant aux probabilités d'avoir un élément d'une liste C dans C_cross
-		for i in range(len(P)):
-			p_adj+=P[i]
-		P_final=[(1/p_adj)*i for i in P]
-
-
-		for j in range(l):                           #on choisi aléatoirement le coefficient dans une des listes C selon la préférence de l'utilisateur
-			C_choisi=choices(C_list,P_final)
-			C_cross+=[C_choisi[0][j]]
+	for j in range(l):                           #on choisi aléatoirement le coefficient dans une des listes C selon la préférence de l'utilisateur
+		C_choisi=choices(C_list,P_final)
+		C_cross+=[C_choisi[0][j]]
 
 	return C_cross
 
-def crossover1_all(C_list,P,pc):
-	C_list_cross=[]
-	for i in range(len(C_list)):
-		C_cross=crossover1(C_list,P,pc)
-		C_list_cross+=[C_cross]
+def crossover_all(C_list,P,pc):
+	C_list_cross=C_list.copy()
+
+	x=generator.uniform(0,1)
+	if x < pc:
+		for i in range(len(C_list)):
+			C_cross=crossover(C_list,P)
+			C_list_cross+=[C_cross]
 	return C_list_cross
 
 
