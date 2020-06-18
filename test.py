@@ -69,7 +69,6 @@ if __name__ == '__main__':
 					fitness[j] = int(input())
 
 				print()
-				print(fitness)
 				C = crossover_all(C, fitness, 0.9)
 				C = mutation_all(C, 0.1, 0.1)
 
