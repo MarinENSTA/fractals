@@ -68,12 +68,8 @@ if __name__ == '__main__':
 
 				print()
 
-				print(C)
-				C = crossover1_all(C, fitness, 0.9)
-				print(C)
+				C = crossover_all(C, fitness, 0.9)
 				C = mutation_all(C, 0.1, 0.1)
-
-				print(C)
 
 
 	# Normalized recount as explained in:
