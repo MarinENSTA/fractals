@@ -16,8 +16,10 @@ def mutation(C,pm,sigma):
 	C_mute=[]
 	if x<pm:
 		for D in C :
+			Doublet=[]
 			for y in D:
-				C_mute+=[y+generator.gauss(0,sigma)]
+				Doublet+=[y+generator.gauss(0,sigma)]
+		C_mute+=[Doublet]
 	return C_mute
 
 def mutation_all(C_list,pm,sigma):
