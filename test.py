@@ -21,7 +21,9 @@ if __name__ == '__main__':
 	C0 = [[-0.4,0.6]]*100
 	C1 = [[0.285, 0.01]]*100
 	C2 = [[0.3,0.5]]*100
-	C3 = [[0,-1]]*100
+	#C3 = [[-1,0]]*100
+	C3 = [[-0.9,0.12]]*100
+	#C3 = [[0,i]]*100
 	C = [C0, C1, C2, C3]
 	quit = False
 	while not quit:
@@ -72,8 +74,39 @@ if __name__ == '__main__':
 				C = crossover_all(C, fitness, 0.9)
 				C = mutation_all(C, 0.1, 0.1)
 
+
 	# Normalized recount as explained in:
 	# https://linas.org/art-gallery/escape/smooth.html
 	# https://www.ibm.com/developerworks/community/blogs/jfp/entry/My_Christmas_Gift
 
-	
+def estDans(elem, liste):
+	ind = -1
+	for i in range(len(liste)):
+		if liste[i] == elem:
+			ind = i
+	return ind
+
+def countElemDansListe(liste):
+	listeElem = []
+	listeOccur = []
+	for x in liste:
+		ind = estDans(x, listeElem)
+		if ind == -1 :
+			listeElem.append(x)
+			listeOccur.append(1)
+		else:
+			listeOccur[ind] += 1
+	return [listeElem, listeOccur]
+
+def triParOccur(liste):
+	[listeElem, listeOccur] = countElemDansListe(liste)
+	for i in range(len(listeOccur)-1):
+		if listeOccur[i] <= listeOccur[i+1] :
+			tmp = listeOccur[i]
+			listeOccur[i] = listeOccur[i+1]
+			listeOccur[i+1] = tmp
+
+			tmp = listeElem[i]
+			listeElem[i] = listeElem[i+1]
+			listeElem[i+1] = tmp
+	return [listeElem, listeOccur]
